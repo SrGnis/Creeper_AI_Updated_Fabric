@@ -11,6 +11,7 @@ import java.util.EnumSet;
 public class BreachCreeperIgniteGoal extends Goal {
     private final CreeperEntity creeper;
     private LivingEntity target;
+    private boolean normalExpl = false;
 
     public BreachCreeperIgniteGoal(CreeperEntity creeper) {
         this.creeper = creeper;
@@ -19,12 +20,19 @@ public class BreachCreeperIgniteGoal extends Goal {
 
     public boolean canStart() {
         LivingEntity livingEntity = this.creeper.getTarget();
-        return this.creeper.getFuseSpeed() > 0 || livingEntity != null && (this.creeper.squaredDistanceTo(livingEntity) < 9.0D || preBreakWall(livingEntity));
+
+        if(this.creeper.getFuseSpeed() > 0){
+            return true;
+        } else if(livingEntity != null) {
+            normalExpl = this.creeper.squaredDistanceTo(livingEntity) < 9.0D;
+            //System.out.println("on can: " + this.normalExpl);
+            return (normalExpl || preBreakWall(livingEntity));
+        }
+        return false;
     }
 
     private boolean preBreakWall(LivingEntity livingEntity){
         if (breakWall(livingEntity)){
-            System.out.println("PUM!!");
             Path p = creeper.getNavigation().findPathTo(livingEntity, 0);
             if( p!=null && p.getLength() > 6 ){
                 creeper.getNavigation().startMovingAlong(p, 1.0);
@@ -51,11 +59,14 @@ public class BreachCreeperIgniteGoal extends Goal {
     }
 
     public void tick() {
+        //System.out.println("on tick: " + this.normalExpl + " " + (this.creeper.squaredDistanceTo(this.target) > 9.0D));
         if (this.target == null) {
             this.creeper.setFuseSpeed(-1);
-        } else if (this.creeper.squaredDistanceTo(this.target) > 49.0D && !this.breakWall(target)) {
+        } else if (this.normalExpl && this.creeper.squaredDistanceTo(this.target) > 9.0D) {
+            System.out.println("Parando");
             this.creeper.setFuseSpeed(-1);
         } else {
+            System.out.println("enchufe");
             this.creeper.setFuseSpeed(1);
         }
     }
