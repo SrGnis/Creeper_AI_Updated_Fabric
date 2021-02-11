@@ -62,7 +62,7 @@ public class BreachCreeperIgniteGoal extends Goal {
         //System.out.println("on tick: " + this.normalExpl + " " + (this.creeper.squaredDistanceTo(this.target) > 9.0D));
         if (this.target == null) {
             this.creeper.setFuseSpeed(-1);
-        } else if (this.normalExpl && this.creeper.squaredDistanceTo(this.target) > 9.0D) {
+        } else if (this.normalExpl && this.creeper.squaredDistanceTo(this.target) > 49.0D) {
             System.out.println("Parando");
             this.creeper.setFuseSpeed(-1);
         } else {
