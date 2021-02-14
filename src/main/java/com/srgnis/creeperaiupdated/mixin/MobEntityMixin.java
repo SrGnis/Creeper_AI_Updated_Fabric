@@ -46,7 +46,6 @@ public abstract class MobEntityMixin extends LivingEntity {
                 centity.readCustomDataFromTag(tag);
             }
 
-            //TODO Follow Range
             centity.getAttributeInstance(EntityAttributes.GENERIC_FOLLOW_RANGE).setBaseValue(CreeperAIUpdated.config.followingRadius);
 
             GoalSelector targets = ((MobEntityAccessor) centity).getTargetSelector();
