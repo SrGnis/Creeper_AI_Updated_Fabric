@@ -25,7 +25,6 @@ public class BreachCreeperIgniteGoal extends Goal {
             return true;
         } else if(livingEntity != null) {
             normalExpl = this.creeper.squaredDistanceTo(livingEntity) < 9.0D;
-            //System.out.println("on can: " + this.normalExpl);
             return (normalExpl || preBreakWall(livingEntity));
         }
         return false;
@@ -59,14 +58,11 @@ public class BreachCreeperIgniteGoal extends Goal {
     }
 
     public void tick() {
-        //System.out.println("on tick: " + this.normalExpl + " " + (this.creeper.squaredDistanceTo(this.target) > 9.0D));
         if (this.target == null) {
             this.creeper.setFuseSpeed(-1);
         } else if (this.normalExpl && this.creeper.squaredDistanceTo(this.target) > 49.0D) {
-            System.out.println("Parando");
             this.creeper.setFuseSpeed(-1);
         } else {
-            System.out.println("enchufe");
             this.creeper.setFuseSpeed(1);
         }
     }
