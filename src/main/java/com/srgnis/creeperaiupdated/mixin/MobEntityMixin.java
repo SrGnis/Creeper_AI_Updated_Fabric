@@ -38,7 +38,7 @@ public abstract class MobEntityMixin extends LivingEntity {
         if(getType() == EntityType.CREEPER){
             Object object = this;
             CreeperEntity centity = ((CreeperEntity)object);
-            if(getRandom().nextDouble() >= CreeperAIUpdated.config.poweredChance  && spawnReason == SpawnReason.NATURAL){
+            if(getRandom().nextDouble() < CreeperAIUpdated.config.poweredChance  && spawnReason == SpawnReason.NATURAL){
 
                 CompoundTag tag = new CompoundTag();
                 centity.writeCustomDataToTag(tag);
